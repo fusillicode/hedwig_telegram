@@ -6,6 +6,7 @@ defmodule HedwigTelegram.MixProject do
       app: :hedwig_telegram,
       version: "0.1.0",
       elixir: "~> 1.9",
+      build_embedded: Mix.env == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -14,8 +15,7 @@ defmodule HedwigTelegram.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
-      mod: {HedwigTelegram.Application, []}
+      extra_applications: [:logger]
     ]
   end
 
@@ -23,8 +23,10 @@ defmodule HedwigTelegram.MixProject do
   defp deps do
     [
       {:hedwig, "~> 1.0"},
-      {:jason, "~> 1.0"},
-      {:tesla, "~> 1.2.1"}
+      {:httpoison, "~> 0.10"},
+      {:plug, "~> 1.2", optional: true},
+      {:plug_cowboy, "~> 1.0"},
+      {:poison, "~> 3.0"}
     ]
   end
 end
