@@ -172,6 +172,51 @@ This will start our application along with our bot.
 Since we have the `Help` responder installed, we can say `alfred help` and we
 should see a list of usage for all of the installed responders.
 
+
+## Telegram Webhook
+Messages are received from Telegram using an HTTP webhook. You can use the included `Hedwig.Adapters.Telegram.Webhook` module or define one yourself
+as long as it calls `Hedwig.Adapters.Messenger.handle_in/2` to send the message to the robot.
+
+### Using the included server
+
+To use the included webhook with your robot, update your dependencies by including `plug` and `cowboy`:
+
+```elixir
+  defp deps do
+    [
+      {:cowboy, "~> 1.0"},
+      {:plug, "~> 1.1"}
+    ]
+  end
+```
+
+Finally, add `Hedwig.Adapters.Telegram.Webhook` to your supervision tree alongside your robot
+
+```elixir
+    children = [
+      worker(Alfred.Robot, []),
+      worker(Hedwig.Adapters.Telegram.Webhook, [])
+    ]
+```
+
+The parameters are:
+* `cowboy_options` - a keyword list of options to pass to cowboy (optional)
+
+### Defining your own webhook
+
+If you are defining your own webhook (for instance in a phoenix app), just make sure to call `Hedwig.Adapters.Telegram.handle_in/2`
+
+```elixir
+    def my_messenger_callback(conn, params) do
+        case Hedwig.Adapters.Telegram.handle_in(robot_name, params) do
+            {:error, reason} ->
+                # Handle robot not found
+            :ok ->
+                # Message sent to robot.
+       end
+    end
+```
+
 ## What's next?
 
 Well, that's it for now. Make sure to read the [Hedwig Documentation](http://hexdocs.pm/hedwig) for more
