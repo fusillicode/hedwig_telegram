@@ -28,3 +28,4 @@ hedwig_telegram-*.tar
 # For @kmos 😄
 /.idea/
 /.iml
+mix.lock
