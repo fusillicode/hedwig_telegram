@@ -168,7 +168,7 @@ To use the included webhook with your robot, update your dependencies by includi
   end
 ```
 
-Finally, add `Hedwig.Adapters.Telegram.Webhook` to your supervision tree alongside your robot
+add `Hedwig.Adapters.Telegram.Webhook` to your supervision tree alongside your robot
 
 ```elixir
     children = [
@@ -179,6 +179,12 @@ Finally, add `Hedwig.Adapters.Telegram.Webhook` to your supervision tree alongsi
 
 The parameters are:
 * `cowboy_options` - a keyword list of options to pass to cowboy (optional)
+
+Finally, you have to register your webhook with telegram. It's possibile in this way:
+
+```shell script
+ curl -d '{"url":"https://<botaddress>/get/<robotname>"}' -H "Content-Type: application/json" -X POST https://api.telegram.org/bot<YourToken>/setWebhook
+```
 
 ### Defining your own webhook
 
