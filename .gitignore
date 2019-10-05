@@ -29,3 +29,4 @@ hedwig_telegram-*.tar
 /.idea/
 /.iml
 mix.lock
+*.iml
