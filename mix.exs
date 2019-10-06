@@ -26,6 +26,7 @@ defmodule HedwigTelegram.MixProject do
     [
       {:hedwig, "~> 1.0"},
       {:httpoison, "~> 0.10"},
+      {:ex_doc, "~> 0.19", only: :dev},
       {:plug, "~> 1.2", optional: true},
       {:plug_cowboy, "~> 1.0"},
       {:poison, "~> 3.0"}
