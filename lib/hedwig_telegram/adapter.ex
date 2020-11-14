@@ -66,7 +66,7 @@ defmodule Hedwig.Adapters.Telegram do
 
   defp build_body(:text, msg) do
     %{
-      chat_id: Map.get(msg, :user),
+      chat_id: Map.get(msg, :room),
       text: Map.get(msg, :text)
     }
   end
@@ -79,17 +79,18 @@ defmodule Hedwig.Adapters.Telegram do
   end
 
   defp build_message(message) do
-    {text, user_id} = parse_req_body(message)
+    {text, user_id, room_id} = parse_req_body(message)
 
     %Hedwig.Message{
       ref: make_ref(),
       text: text,
       type: "chat",
-      user: user_id
+      user: user_id,
+      room: room_id
     }
   end
 
   defp parse_req_body(message) do
-    {message["text"], get_in(message, ["from", "id"])}
+    {message["text"], get_in(message, ["from", "id"]), get_in(message, ["chat", "id"])}
   end
 end
